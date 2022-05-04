@@ -57,7 +57,7 @@ if price_float <= WISH_PRICE:
         conn.sendmail(from_addr=M_USERE,
                       to_addrs=TO_MAIL,
                       msg=(f'Subject:Amazon Sale\n\n Name={name}\n'
-                          f'Product= {product.encode("windows-1254")}\n'
+                          f'Product= {product}\n'
                           f'Wish Price= {WISH_PRICE}TL\n'
                           f'Sale Price= {price_float}\n')
                       )
