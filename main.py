@@ -47,6 +47,8 @@ price_float = Decimal(price_text)
 name=(TO_MAIL.split("@"))[0]
 product=product.replace("\xa0"," ")
 product=product.replace("\xe7","c")
+product=encodings.normalize_encoding(product)
+
 
 if price_float <= WISH_PRICE:
     with SMTP("smtp.gmail.com") as conn:
