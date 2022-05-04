@@ -25,7 +25,7 @@ response = requests.get(
 soup = bs(response.text, "lxml",exclude_encodings="utf-8")
 # with open("amazon.txt","w",encoding="utf-8") as file:
 #     file.write(soup.prettify())
-product = soup.select_one("h1 span",id="title").getText()
+product = soup.select_one("h1 span",id="title").getText().strip()
 price1 = (soup.find(name="div", class_="a-section aok-hidden twister-plus-buying-options-price-data")).text
 pricve1 = price1.strip('[]{}')
 price = pricve1.replace('"', "")
@@ -45,9 +45,13 @@ price_dict = {pri.strip(): price[price.index(pri) + 1] for pri in price if " " i
 price_text = price_dict["priceAmount"]
 price_float = Decimal(price_text)
 name=(TO_MAIL.split("@"))[0]
-product=product.replace("\xa0"," ")
-product=product.replace("\xe7","c")
-product=encodings.normalize_encoding(product)
+# product=product.replace("\xa0"," ")
+# product=product.replace("\xe7","c")
+# product=encodings.normalize_encoding(product)
+
+
+message=f'''Subject:Amazon Sale\n\n Name={name}\nProduct= {product}\nWish Price= {WISH_PRICE}TL\nSale Price= {price_float}\n'''\
+    .encode("utf-8")
 
 
 if price_float <= WISH_PRICE:
@@ -56,9 +60,6 @@ if price_float <= WISH_PRICE:
         conn.login(user=M_USERE, password=M_SECE)
         conn.sendmail(from_addr=M_USERE,
                       to_addrs=TO_MAIL,
-                      msg=(f'Subject:Amazon Sale\n\n Name={name}\n'
-                          f'Product= {product}\n'
-                          f'Wish Price= {WISH_PRICE}TL\n'
-                          f'Sale Price= {price_float}\n')
+                      msg=message
                       )
 
