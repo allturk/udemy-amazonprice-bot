@@ -47,7 +47,6 @@ price_float = Decimal(price_text)
 name=(TO_MAIL.split("@"))[0]
 product=product.replace("\xa0"," ")
 product=product.replace("\xe7","c")
-print(product)
 
 if price_float <= WISH_PRICE:
     with SMTP("smtp.gmail.com") as conn:
@@ -56,7 +55,7 @@ if price_float <= WISH_PRICE:
         conn.sendmail(from_addr=M_USERE,
                       to_addrs=TO_MAIL,
                       msg=(f'Subject:Amazon Sale\n\n Name={name}\n'
-                          f'Product= {product.encode("utf-8")}\n'
+                          f'Product= {product.encode("windows-1254")}\n'
                           f'Wish Price= {WISH_PRICE}TL\n'
                           f'Sale Price= {price_float}\n')
                       )
